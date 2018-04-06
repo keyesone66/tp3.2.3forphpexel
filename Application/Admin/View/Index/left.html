@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>无标题文档</title>
+    <link href="__ADMIN__/css/style.css" rel="stylesheet" type="text/css" />
+    <script language="JavaScript" src="__ADMIN__/js/jquery.js"></script>
+    <script type="text/javascript">
+    $(function() {
+        //导航切换
+        $(".menuson li").click(function() {
+            $(".menuson li.active").removeClass("active")
+            $(this).addClass("active");
+        });
+
+        $('.title').click(function() {
+            var $ul = $(this).next('ul');
+            $('dd').find('ul').slideUp();
+            if ($ul.is(':visible')) {
+                $(this).next('ul').slideUp();
+            } else {
+                $(this).next('ul').slideDown();
+            }
+        });
+    })
+    </script>
+</head>
+
+<body style="background:#f0f9fd;">
+    <div class="lefttop"><span></span>※ MENU ※</div>
+    <dl class="leftmenu">
+      {//遍历session中的权限数据}
+      <volist name="Think.session.auths" id="auth">
+        {//判断当前的权限是否为顶级权限,如果是 创建一个大菜单}
+        <if condition="$auth.auth_pid == 0 && $auth.is_menu == '1' ">
+          <dd>
+              <div class="title">
+                  <span><img src="__ADMIN__/images/leftico01.png" /></span>{$auth.auth_name}
+              </div>
+              <ul class="menuson">
+                {//遍历session的权限数据}
+                <volist name="Think.session.auths" id="at">
+                  {//找儿子 判断当前at权限 是否为 auth权限的子权限}
+                  <if condition="$at.auth_pid == $auth.auth_id  && $at.is_menu == '1' ">
+                    {//找到了,添加一个小菜单}
+                      <li>
+                          <cite></cite><a href="__MODULE__/{$at.auth_c}/{$at.auth_a}" target="rightFrame">{$at.auth_name}</a><i></i></li>
+                  </if>
+                </volist>
+              </ul>
+          </dd>
+        </if>
+      </volist>
+    </dl>
+</body>
+
+</html>

@@ -1,0 +1,118 @@
+{__NOLAYOUT__}
+<layout name='User/layout'/>
+
+
+	<!-- 登录主体部分start -->
+	<div class="login w990 bc mt10">
+		<div class="login_hd">
+			<h2>用户登录</h2>
+			<b></b>
+		</div>
+		<div class="login_bd">
+			<div class="login_form fl">
+				<form action="" method="post">
+					<ul>
+						<li>
+							<label for="">用户名：</label>
+							<input type="text" class="txt" name="username" />
+						</li>
+						<li>
+							<label for="">密码：</label>
+							<input type="password" class="txt" name="password" />
+							<a href="">忘记密码?</a>
+						</li>
+						<li class="checkcode">
+							<label for="">验证码：</label>
+							<input type="text"  name="checkcode" />
+							<img id="captcha" src="__CONTROLLER__/captcha" alt="" />
+							<span>看不清？<a id="refresh" href="javascript:;">换一张</a></span>
+						</li>
+						<li>
+							<label for="">&nbsp;</label>
+							<input type="checkbox" class="chb"  /> 保存登录信息
+						</li>
+						<li>
+							<label for="">&nbsp;</label>
+							{//安排一个隐藏域,记录上一页的地址}
+							<input type="hidden" name="history" value="">
+							<input type="button" value="" class="login_btn" />
+						</li>
+					</ul>
+				</form>
+
+				<div class="coagent mt15">
+					<dl>
+						<dt>使用合作网站登录商城：</dt>
+						<dd class="qq"><a href=""><span></span>QQ</a></dd>
+						<dd class="weibo"><a href=""><span></span>新浪微博</a></dd>
+						<dd class="yi"><a href=""><span></span>网易</a></dd>
+						<dd class="renren"><a href=""><span></span>人人</a></dd>
+						<dd class="qihu"><a href=""><span></span>奇虎360</a></dd>
+						<dd class=""><a href=""><span></span>百度</a></dd>
+						<dd class="douban"><a href=""><span></span>豆瓣</a></dd>
+					</dl>
+				</div>
+			</div>
+
+			<div class="guide fl">
+				<h3>还不是商城用户</h3>
+				<p>现在免费注册成为商城用户，便能立刻享受便宜又放心的购物乐趣，心动不如行动，赶紧加入吧!</p>
+
+				<a href="regist.html" class="reg_btn">免费注册 >></a>
+			</div>
+
+		</div>
+	</div>
+	<!-- 登录主体部分end -->
+	<script type="text/javascript">
+		$(function(){
+			//页面就绪
+			//为 换一张 a标签绑定点击事件
+			$("#refresh").click(function(){
+				//为图片更新一个src属性地址 就能重新请求
+				$("#captcha").attr('src','__CONTROLLER__/captcha/_/'+Math.random());
+			});
+
+			//为输入验证码的文本框绑定 失去焦点事件 异步校验验证码
+			$("[name=checkcode]").blur(function(){
+				//1、获取用户填写的验证码
+				var captcha = $(this).val();
+				//2、验证码存储在session中,到服务器验证
+				$.get("{:U('user/check')}",'captcha='+captcha,function(msg){
+					// console.log(msg);
+					if(msg == 0){
+						//提示用户,验证码填写错误
+						alert('验证码错误,请重新填写!');
+						//更换一个验证码图,手动触发事件
+						$("#refresh").trigger('click');
+					}
+				},'text')
+			})
+
+			$('.login_btn').click(function(){
+				//1、获取用户填写的验证码
+				var captcha = $("[name=checkcode]").val();
+				//2、验证码存储在session中,到服务器验证
+				$.get("{:U('user/check')}",'captcha='+captcha,function(msg){
+					if(msg == 1){
+						//验证码正确,提交表单
+						$('form').submit();
+					}else{
+						//提示用户,验证码填写错误
+						alert('验证码错误,请重新填写!');
+						//更换一个验证码图,手动触发事件
+						$("#refresh").trigger('click');
+					}
+				},'text')
+			})
+
+			//在jQuery中有一个document对象属性,记录上一个页面的url
+			//只能够记录通过超链接跳转的上一页
+			//直接通过输入地址栏进行的跳转无法记录
+			// alert(document.referrer);
+			//页面就绪时,为隐藏域添加一个值,记录上一页的url
+			$("[name=history]").val(document.referrer);
+		});
+	</script>
+
+	<div style="clear:both;"></div>
