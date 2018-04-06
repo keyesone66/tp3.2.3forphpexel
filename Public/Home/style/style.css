@@ -1,0 +1,22 @@
+/*
+Template Name: EC模板堂正版授权模板
+Template URI: #
+Description: 买模板请认准模板堂(ecmoban.com) <br/> 挑选优质商业模板：#
+Version: 2.71
+Author: 进模板堂挑选更多YONGDA模板
+Author URI: #
+Logo filename: logo.gif
+\\
+*/
+
+/*购物车弹出框*/
+.orange{color: #CC0000;}
+a.bt_orange:link,a.bt_orange:visited{color:#FFFFFF;width:107px; height:27px; line-height:27px;background:url(../images/chakanBtn.jpg) no-repeat; text-align:center; font-weight:bold;cursor:pointer; display:block; _display:inline; float:left; margin-left:60px;}
+a.bt_blue:link,a.bt_blue:visited{color:#FFFFFF;width:107px; height:27px; line-height:27px;background:url(../images/tiaoxuannBtn.jpg) no-repeat; text-align:center; font-weight:bold;cursor:pointer;display:block;_display:inline; float:right; margin-right:60px;}
+.buy_blank{ width:350px; height:115px; border:3px solid #AAAAAA; position:absolute; background-color:#FFFFFF;}
+.buy_blank p{ line-height:30px;}
+.buy_blank h4{ border-bottom:2px solid #D0D0D0; font-weight:normal; height:30px; line-height:30px;background:url(../images/buyicon.jpg) no-repeat 10px center; text-indent:28px; margin-bottom:10px; padding-left:20px;}
+.buy_blank h4 span{ float:right; margin:10px 10px 0 0}
+img, fieldset {border:0 none;}
+
+.number_change{cursor:pointer;}
